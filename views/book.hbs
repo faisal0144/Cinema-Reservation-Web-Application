@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Seats</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col items-center min-h-screen p-8">
+
+    <!-- Main container for the booking page -->
+    <div class="booking-card">
+
+        <!-- Movie Information -->
+        <div class="movie-info">
+            <img src={{img_url}} alt="Movie Poster" class="movie-poster-booking">
+            <div class="movie-details">
+                <h1 class="movie-title-booking"> {{title}} </h1>
+                <p class="movie-genre-booking">{{genre}}</p>
+                <p class="movie-price">Price per seat: $<span id="seat-price">10</span></p>
+            </div>
+        </div>
+
+        <div class="booking-section">
+            <div class="screen">Screen</div>
+
+            <!-- Legend for seat status -->
+            <ul class="legend">
+                <li><div class="seat"></div><small>Available</small></li>
+                <li><div class="seat occupied"></div><small>Occupied</small></li>
+            </ul>
+
+            <!-- Seat Grid -->
+            <div class="seat-grid" id="seat-container">
+                <!-- Seats with unique IDs -->
+                <button class="seat" id="seat-1">1</button>
+                <button class="seat" id="seat-2">2</button>
+                <button class="seat" id="seat-3">3</button>
+                <button class="seat" id="seat-4">4</button>
+                <button class="seat" id="seat-5">5</button>
+                <button class="seat" id="seat-6">6</button>
+                <button class="seat" id="seat-7">7</button>
+                <button class="seat" id="seat-8">8</button>
+                <button class="seat" id="seat-9">9</button>
+                <button class="seat" id="seat-10">10</button>
+                <button class="seat" id="seat-11">11</button>
+                <button class="seat" id="seat-12">12</button>
+                <button class="seat" id="seat-13">13</button>
+                <button class="seat" id="seat-14">14</button>
+                <button class="seat" id="seat-15">15</button>
+                <button class="seat" id="seat-16">16</button>
+                <button class="seat" id="seat-17">17</button>
+                <button class="seat" id="seat-18">18</button>
+                <button class="seat" id="seat-19">19</button>
+                <button class="seat" id="seat-20">20</button>
+                <button class="seat" id="seat-21">21</button>
+                <button class="seat" id="seat-22">22</button>
+                <button class="seat" id="seat-23">23</button>
+                <button class="seat" id="seat-24">24</button>
+                <button class="seat" id="seat-25">25</button>
+                <button class="seat" id="seat-26">26</button>
+                <button class="seat" id="seat-27">27</button>
+                <button class="seat" id="seat-28">28</button>
+                <button class="seat" id="seat-29">29</button>
+                <button class="seat" id="seat-30">30</button>
+                <button class="seat" id="seat-31">31</button>
+                <button class="seat" id="seat-32">32</button>
+                <button class="seat" id="seat-33">33</button>
+                <button class="seat" id="seat-34">34</button>
+                <button class="seat" id="seat-35">35</button>
+                <button class="seat" id="seat-36">36</button>
+                <button class="seat" id="seat-37">37</button>
+                <button class="seat" id="seat-38">38</button>
+                <button class="seat" id="seat-39">39</button>
+                <button class="seat" id="seat-40">40</button>
+            </div>
+
+            <div class="summary">
+                You have selected <span id="selected-seats-count"> 0 </span> seats for a total of $<span id="total-price">0</span>.
+            </div>
+
+            <div class="mt-8">
+                <button class="book-button">Book Seats</button>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        const occupiedSeats = {{{occupiedSeats}}};
+
+occupiedSeats.forEach(element => {
+    let bookedSeat = document.getElementById(element);
+    if (bookedSeat) {
+        bookedSeat.classList.add('occupied');
+    }
+});
+
+let selectedSeats = [];
+const seats = document.querySelectorAll(".seat");
+const seatCountEl = document.getElementById("selected-seats-count");
+const totalPriceEl = document.getElementById("total-price");
+const seatPrice = parseInt(document.getElementById("seat-price").innerText);
+
+
+seats.forEach(seat => {
+    seat.addEventListener("click", () => {
+        const id = seat.id;
+
+        
+        if (seat.classList.contains("occupied") && !selectedSeats.includes(id)) return;
+
+        
+        if (selectedSeats.includes(id)) {
+            selectedSeats = selectedSeats.filter(seatId => seatId !== id); // FIX: reassign
+            seat.classList.remove("selected");
+        } else {
+            selectedSeats.push(id);
+            seat.classList.add("selected");
+        }
+
+       
+        seatCountEl.innerText = selectedSeats.length;
+        totalPriceEl.innerText = selectedSeats.length * seatPrice;
+
+        console.log(selectedSeats);
+    });
+}); 
+
+   const book = document.querySelector(".book-button");
+   book.addEventListener("click", ()=>{
+   const movieTitle = "{{title}}".trim().replace(/\s+/g, '');
+ fetch("/savebooking", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ seats: selectedSeats, title: movieTitle })
+})
+.then(res => res.text())
+.then(data => {
+    console.log(data.message); // "Seats saved successfully"
+})
+.catch(err => console.error(err));
+   })
+
+    </script>
+</body>
+</html>

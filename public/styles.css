@@ -1,0 +1,359 @@
+/* Existing styles for the auth pages remain here... */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #111827;
+}
+
+/* Card container styles */
+.card {
+    position: relative;
+    width: 100%;
+    max-width: 28rem; /* Equivalent to max-w-md in Tailwind */
+    padding: 2rem 2.5rem; /* Equivalent to p-8 md:p-10 */
+    background-color: #1f2937;
+    border-radius: 1rem; /* Equivalent to rounded-2xl */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Header styles */
+.card-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.card-title {
+    font-size: 1.875rem; /* Equivalent to text-3xl */
+    font-weight: 800; /* Equivalent to font-extrabold */
+    color: white;
+}
+
+.card-subtitle {
+    color: #9ca3af; /* Equivalent to text-gray-400 */
+    margin-top: 0.5rem;
+}
+
+/* Form styles */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Equivalent to space-y-6 */
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem; /* Equivalent to text-sm */
+    font-weight: 500; /* Equivalent to font-medium */
+    color: #d1d5db; /* Equivalent to text-gray-300 */
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.5rem 1rem; /* Equivalent to px-4 py-2 */
+    color: white;
+    background-color: #374151; /* A dark gray for inputs */
+    border: 1px solid #4b5563; /* A slightly lighter border */
+    border-radius: 0.75rem; /* Equivalent to rounded-xl */
+    transition: all 0.15s ease-in-out;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #8b5cf6; /* Purple border on focus */
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.5);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.form-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0.75rem 1rem; /* Equivalent to py-3 px-4 */
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+    background-color: #8b5cf6;
+    transition: all 0.15s ease-in-out;
+}
+
+.form-button:hover {
+    background-color: #7c3aed;
+}
+
+.form-link {
+    font-weight: 500;
+    color: #a78bfa;
+    transition: color 0.15s ease-in-out;
+}
+
+.form-link:hover {
+    color: #c4b5fd;
+}
+
+/* Footer styles */
+.card-footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #9ca3af;
+}
+
+/* New warning message styles */
+.warning-message {
+    padding: 0.75rem 1rem;
+    background-color: #ef4444; /* A shade of red for warnings */
+    color: white;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+/* New styles for the main movie page */
+
+/* Responsive grid for movie cards */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .movie-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .movie-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Styles for a single movie card */
+.movie-card {
+    background-color: #1f2937;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+.movie-poster {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    object-fit: cover;
+}
+
+.movie-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.25rem;
+}
+
+.movie-genre {
+    font-size: 0.875rem;
+    color: #d1d5db;
+}
+
+.movie-button {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    color: white;
+    background-color: #8b5cf6;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.movie-button:hover {
+    background-color: #7c3aed;
+}
+
+/* New styles for the booking page */
+.booking-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 48rem;
+    width: 100%;
+    padding: 2rem;
+    background-color: #1f2937;
+    border-radius: 1rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+@media (min-width: 640px) {
+    .movie-info {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+        gap: 2rem;
+    }
+}
+
+.movie-poster-booking {
+    width: 12rem;
+    height: auto;
+    border-radius: 0.75rem;
+    object-fit: cover;
+}
+
+.movie-details {
+    margin-top: 1rem;
+}
+
+@media (min-width: 640px) {
+    .movie-details {
+        margin-top: 0;
+    }
+}
+
+.movie-title-booking {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.movie-genre-booking {
+    font-size: 1rem;
+    color: #9ca3af;
+}
+
+.movie-price {
+    font-size: 1rem;
+    color: #d1d5db;
+    margin-top: 1rem;
+}
+
+.booking-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.screen {
+    width: 100%;
+    height: 3rem;
+    background-color: #4b5563;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    margin-bottom: 1.5rem;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    color: #d1d5db;
+    margin-bottom: 2rem;
+}
+
+.legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.seat {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #d1d5db;
+}
+
+.seat:not(.occupied) {
+    background-color: #374151;
+}
+
+.seat:not(.occupied):hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+}
+
+.seat-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 35rem;
+    margin: 0 auto;
+}
+
+.seat.selected {
+    background-color: #8b5cf6;
+}
+
+.seat.occupied {
+    background-color: #4b5563; /* New color for occupied seats */
+    cursor: not-allowed;
+}
+
+.summary {
+    color: white;
+    font-size: 1.125rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.book-button {
+    width: 100%;
+    max-width: 12rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: white;
+    background-color: #8b5cf6;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.book-button:hover {
+    background-color: #7c3aed;
+}
