@@ -9,9 +9,12 @@ mongoose.connect('mongodb://localhost:27017/cinemaDB').then(() => {
 
 const userSchema = new mongoose.Schema({
   email: String,
-  password: String
+  password: String,
+  uuid : String
 });
 
 const User = mongoose.model('User', userSchema);
 
-module.exports = User;
+
+
+module.exports = User

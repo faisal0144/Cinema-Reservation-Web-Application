@@ -87,15 +87,7 @@
                 } else if (response.ok) {
                     // If successful but no redirect, redirect to main page
                     window.location.href = '/main';
-                } else {
-                    // Show warning message
-                    const errorText = await response.text();
-                    warningDiv.textContent = errorText;
-                    warningDiv.classList.remove('hidden');
                 }
-            } catch (error) {
-                warningDiv.textContent = 'An error occurred. Please try again.';
-                warningDiv.classList.remove('hidden');
             }
         });
     </script>

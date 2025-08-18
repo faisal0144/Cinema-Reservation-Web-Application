@@ -5,18 +5,30 @@ const port = 3000;
 const router = express.Router();
 const User = require(path.join(__dirname, '../mongoDb.js'));
 const bookSeat = require(path.join(__dirname, '../booking.js'));
+const { v4: uuidv4 } = require('uuid');
+
 
 app.use(express.json()); // for JSON requests
 app.use(express.urlencoded({ extended: true }));
+
 
 function slugify(text) {
   return text.toLowerCase().replace(/\s+/g, '');
 }
 
 router.get('/', (req, res) => {
-  res.render('login');
+  res.redirect('/auth');
 });
-
+router.get('/auth', (req,res)=>{
+    const uuIdCookie = req.cookies.user_uuId;
+    console.log(uuIdCookie);
+    if (uuIdCookie){
+        res.redirect("/main");
+    }
+    else {
+        res.redirect("/login");
+    }
+})
 router.get('/login', (req, res) => {
   res.render('login.hbs');
 });
@@ -34,7 +46,10 @@ router.post('/signup', async (req, res) => {
     const existingUsers = await User.findOne({email: email});
     if (!existingUsers) {
     try{
-        const newUser = User.create({ email, password });
+        
+            const uuid = uuidv4();
+          res.cookie("user_uuId",uuid);
+        const newUser = await User.create({ email, password, uuid});
         res.redirect('/main');
     }
     catch (error) {
@@ -51,27 +66,31 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const user = req.body;
+    const {email, password} = req.body;
+    console.log(email, password);
     try {
-        const foundUser = await User.findOne({email: user.email});
-        if (foundUser && foundUser.password === user.password) {
+        const foundUser = await User.findOne({email: email});
+        if (foundUser && foundUser.password === password) {
             console.log('Login successful for user:', foundUser.email);
-            res.redirect('/main');
+            const uuId = foundUser.uuid;
+            res.cookie('user_uuId',uuId);
+            return res.redirect('/main');
         }
         else {
+            console.log('Login failed for user:', email);
             // Render login page with error message
             res.render('login', { 
                 error: 'Invalid email or password',
-                email: user.email // preserve the email for better UX
+                email: email // preserve the email for better UX
             });
-            console.log('Login failed for user:', user.email);
+            
         }
     }
     catch (error) {
         console.error('Error during login:', error);    
         res.render('login', { 
             error: 'Error during login. Please try again.',
-            email: user.email
+            email: email
         });
     }
 });
