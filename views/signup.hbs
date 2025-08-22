@@ -19,16 +19,12 @@
             <h1 class="card-title">Join the fun!</h1>
             <p class="card-subtitle">Create an account to get started.</p>
         </div>
-              <!-- Warning Message Area (initially hidden) -->
-          {{#if error}}
-        <div class="warning-message" id="warning">
-            {{error}}
-        </div>
-        {{else}}
+            
+        <!-- Warning Message Area (initially hidden) -->
         <div class="warning-message hidden" id="warning">
             An error occurred. Please try again.
         </div>
-        {{/if}}
+        
         <!-- Signup Form -->
         <form id="signup-form" action="/signup" method="post" class="form">
             <div class="form-group">
@@ -65,6 +61,9 @@
         <!-- Link to a separate signup page if needed -->
         <div class="card-footer">
             Already have an account? <a href="/login" class="form-link">Sign In</a>
+            <br>
+            <br>
+            Are you an administrator? <a href="/admin-signup" class="form-link">Sign Up Here</a>
         </div>
 
     </div>

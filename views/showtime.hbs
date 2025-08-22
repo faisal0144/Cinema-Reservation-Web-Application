@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showtimes</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+
+    <!-- Centered Container -->
+    <div class="container max-w-3xl mx-auto p-6 bg-gray-800 rounded-2xl shadow-lg">
+        <h1 class="text-3xl font-bold mb-6 text-center">Available Showtimes</h1>
+
+        {{#if showtimes.length}}
+            <ul class="space-y-6">
+                {{#each showtimes}}
+                <li class="flex items-center gap-6 p-6 bg-gray-700 rounded-xl hover:bg-gray-600 transition">
+
+                    <!-- Movie Poster -->
+                    <div class="w-24 h-32 flex-shrink-0">
+                        <img src="{{this.movie.poster}}" alt="Movie Poster" class="w-full h-full object-cover rounded-lg shadow-md">
+                    </div>
+
+                    <!-- Showtime Info -->
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold">{{this.movie.title}}</h2>
+                        <p class="mt-1 text-gray-300">📅 {{this.date}}</p>
+                        <p class="text-gray-300">🕒 {{this.time}}</p>
+
+                        <!-- Book Now Button -->
+                        <div class="mt-4">
+                            <a href="/book?showtimeId={{this._id}}">
+                                <button class="px-6 py-2 bg-blue-600 rounded-lg hover:bg-blue-500 transition">
+                                    Book Now
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+
+                </li>
+                {{/each}}
+            </ul>
+        {{else}}
+            <p class="text-gray-400 text-center">No showtimes available for this movie.</p>
+        {{/if}}
+    </div>
+
+</body>
+</html>

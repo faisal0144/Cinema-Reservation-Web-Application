@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Movies</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col items-center min-h-screen p-8">
+
+    <!-- Main container for the movie page -->
+    <div class="container mx-auto">
+
+        <!-- Page Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold text-white">Now Showing</h1>
+            <p class="text-gray-400 mt-2 text-lg">Book your seats for today's top movies!</p>
+        </header>
+
+        <!-- Movie Grid -->
+        <div class="movie-grid">
+            <!-- Movie Card 1 -->
+            <div class="movie-card group">
+                <img src="https://cdn.scribblehub.com/images/42/Galactic-Odyssey-StarKnights_846089_1692746155.jpg" alt="Movie Poster" class="movie-poster">
+                <div class="p-4">
+                    <h2 class="movie-title">The Galactic Odyssey</h2>
+                    <p class="movie-genre">Sci-Fi, Adventure</p>
+                    <div class="mt-4">
+                        <a href="/book?title=The Galactic Odyssey">
+                            <button class="movie-button">Book Now</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 2 -->
+            <div class="movie-card group">
+                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/78/The_Moor_%28film%29.jpg/250px-The_Moor_%28film%29.jpg" alt="Movie Poster" class="movie-poster">
+                <div class="p-4">
+                    <h2 class="movie-title">Mystery on the Moor</h2>
+                    <p class="movie-genre">Mystery, Thriller</p>
+                    <div class="mt-4">
+                        <a href="/book?title=Mystery on the Moor">
+                            <button class="movie-button">Book Now</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 3 -->
+            <div class="movie-card group">
+                <img src="https://m.media-amazon.com/images/M/MV5BMDRhOTA2ODQtMjkxOC00NDM3LWI2YWUtMDk3MWMzZTM4NjNlXkEyXkFqcGc@._V1_.jpg" alt="Movie Poster" class="movie-poster">
+                <div class="p-4">
+                    <h2 class="movie-title">Romantic Getaway</h2>
+                    <p class="movie-genre">Romance, Comedy</p>
+                    <div class="mt-4">
+                        <a href="/book?title=Romantic Getaway">
+                            <button class="movie-button">Book Now</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 4 -->
+            <div class="movie-card group">
+                <img src="https://dg3fwljcbubde.cloudfront.net/Posters/last-knights.jpg" alt="Movie Poster" class="movie-poster">
+                <div class="p-4">
+                    <h2 class="movie-title">The Last Knight</h2>
+                    <p class="movie-genre">Fantasy, Action</p>
+                    <div class="mt-4">
+                        <a href="/book?title=The Last Knight">
+                            <button class="movie-button">Book Now</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 5 -->
+            <div class="movie-card group">
+                <img src="https://m.media-amazon.com/images/M/MV5BMTY4NGMxN2QtYTdiMC00MDAzLWIyZGItMjgzNTBkNjVlY2Q1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Movie Poster" class="movie-poster">
+                <div class="p-4">
+                    <h2 class="movie-title">Haunted Whispers</h2>
+                    <p class="movie-genre">Horror</p>
+                    <div class="mt-4">
+                        <a href="/book?title=Haunted Whispers">
+                            <button class="movie-button">Book Now</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie Card 6 -->
+            <div class="movie-card group">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9DMJ8aI1lCMOuXTM-SE68QBoRp-OTRRJ06w&s" alt="Movie Poster" class="movie-poster">
+                <div class="p-4">
+                    <h2 class="movie-title">The Grand Heist</h2>
+                    <p class="movie-genre">Crime, Thriller</p>
+                    <div class="mt-4">
+                        <a href="/book?title=The Grand Heist">
+                            <button class="movie-button">Book Now</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

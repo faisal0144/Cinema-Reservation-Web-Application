@@ -1,33 +1,33 @@
 const express = require('express');
 const path = require('path');
+const showtime = require('../models/showtimes');
 const app = express();
 const port = 3000;
 const router = express.Router();
-const User = require(path.join(__dirname, '../mongoDb.js'));
-const bookSeat = require(path.join(__dirname, '../booking.js'));
-const { v4: uuidv4 } = require('uuid');
+
+
+const {handleBooking,UpdateBookingPage} = require(path.join(__dirname, '../controller/booking.js'));
+const handleMovies = require(path.join(__dirname, '../controller/movies.js'));
+const  handleAuth= require(path.join(__dirname, '../controller/auth.js'));
+const handleShowtimes = require(path.join(__dirname, '../controller/showtimes.js'));
+const {handleSignup,handleSignin,HandleAdminSignup } = require(path.join((__dirname, '../controller/user.js')))
+const {addMovie,handleShowtimesPage,addShowTime, updateMoviesPage} = require(path.join(__dirname, '../controller/admin.js'));
 
 
 app.use(express.json()); // for JSON requests
 app.use(express.urlencoded({ extended: true }));
 
 
-function slugify(text) {
-  return text.toLowerCase().replace(/\s+/g, '');
-}
 
 router.get('/', (req, res) => {
   res.redirect('/auth');
 });
 router.get('/auth', (req,res)=>{
-    const uuIdCookie = req.cookies.user_uuId;
-    console.log(uuIdCookie);
-    if (uuIdCookie){
-        res.redirect("/main");
-    }
-    else {
-        res.redirect("/login");
-    }
+    handleAuth(req,res);
+})
+
+router.get("/showtimes", (req,res)=>{
+    handleShowtimes(req,res);
 })
 router.get('/login', (req, res) => {
   res.render('login.hbs');
@@ -37,135 +37,52 @@ router.get('/signup', (req, res) => {
   res.render('signup');
 });
 
+router.get('/admin-signup', (req,res)=>{
+    res.render('adminSignup');
+})
+router.post('/admin-signup', (req,res)=>{
+    HandleAdminSignup(req,res);
+})
 router.get('/main', (req,res)=>{
-    res.render('main');
+    handleMovies(req,res);
 });
-router.post('/signup', async (req, res) => {
-    console.log('Received signup request:', req.body);
-    const { email, password } = req.body;
-    const existingUsers = await User.findOne({email: email});
-    if (!existingUsers) {
-    try{
-        
-            const uuid = uuidv4();
-          res.cookie("user_uuId",uuid);
-        const newUser = await User.create({ email, password, uuid});
-        res.redirect('/main');
-    }
-    catch (error) {
-        console.error('Error creating user:', error);
-        res.status(500).send('Error creating user');
-    }
-    } else {
-        console.log('User already exists:', email);
-        res.render('signup', { 
-            error: 'User already exists. Please log in.',
-            email: email // preserve the email for better UX
-        });
-    }
+router.post('/signup', (req,res)=>{
+    handleSignup(req,res);
 });
 
 router.post('/login', async (req, res) => {
-    const {email, password} = req.body;
-    console.log(email, password);
-    try {
-        const foundUser = await User.findOne({email: email});
-        if (foundUser && foundUser.password === password) {
-            console.log('Login successful for user:', foundUser.email);
-            const uuId = foundUser.uuid;
-            res.cookie('user_uuId',uuId);
-            return res.redirect('/main');
-        }
-        else {
-            console.log('Login failed for user:', email);
-            // Render login page with error message
-            res.render('login', { 
-                error: 'Invalid email or password',
-                email: email // preserve the email for better UX
-            });
-            
-        }
-    }
-    catch (error) {
-        console.error('Error during login:', error);    
-        res.render('login', { 
-            error: 'Error during login. Please try again.',
-            email: email
-        });
-    }
+    handleSignin(req,res);
 });
 
 router.get('/book', async (req,res)=>{
-    const title = req.query.title;
-    const movies = [
-        {
-            title: "The Galactic Odyssey",
-            genre: "Sci-Fi, Adventure",
-            imageUrl: "https://cdn.scribblehub.com/images/42/Galactic-Odyssey-StarKnights_846089_1692746155.jpg"
-        },
-        {
-            title: "Mystery on the Moor",
-            genre: "Mystery, Thriller",
-            imageUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/7/78/The_Moor_%28film%29.jpg/250px-The_Moor_%28film%29.jpg"
-        },
-        {
-            title: "Romantic Getaway",
-            genre: "Romance, Comedy",
-            imageUrl: "https://m.media-amazon.com/images/M/MV5BMDRhOTA2ODQtMjkxOC00NDM3LWI2YWUtMDk3MWMzZTM4NjNlXkEyXkFqcGc@._V1_.jpg"
-        },
-        {
-            title: "The Last Knight",
-            genre: "Fantasy, Action",
-            imageUrl: "https://dg3fwljcbubde.cloudfront.net/Posters/last-knights.jpg"
-        },
-        {
-            title: "Haunted Whispers",
-            genre: "Horror",
-            imageUrl: "https://m.media-amazon.com/images/M/MV5BMTY4NGMxN2QtYTdiMC00MDAzLWIyZGItMjgzNTBkNjVlY2Q1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
-        },
-        {
-            title: "The Grand Heist",
-            genre: "Crime, Thriller",
-            imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9DMJ8aI1lCMOuXTM-SE68QBoRp-OTRRJ06w&s"
-        }
-    ];
-    const slug = slugify(title);
-    let occupiedSeats = await bookSeat.find({slug:slug});
-    console.log("slug",{slug});
-    console.log(occupiedSeats);
-    let occupiedSeat = occupiedSeats.map(element => element.seatId);
-    console.log(occupiedSeat);
-    
-    const movie = movies.find(movie => movie.title === title);
-    res.render('book.hbs', {
-        title : movie.title,
-        img_url : movie.imageUrl,
-        genre : movie.genre,
-        occupiedSeats: JSON.stringify(occupiedSeat)
-    });
+    UpdateBookingPage(req,res);
 });
 
 router.post('/savebooking', async (req, res) => {
-    const {seats , title} = req.body;
-    const slug = slugify(title);
-    try {
-      const seatDocs = seats.map(seatId => ({
-    title: title,
-    seatId: seatId,
-    slug : slug
-
-}));
-        const bookedSeat = await bookSeat.insertMany(seatDocs);
-
-        console.log('Added seat:', bookedSeat);
-
-        // Send a response
-        res.send(`Seat booked for ${title}`);
-    } catch (error) {
-        console.error('Error booking seat:', error);
-        res.status(500).send('Error booking seat');
-    }
+    await handleBooking(req,res);
+    
 });
+
+router.get('/admin/addmovie', (req,res) =>{
+    updateMoviesPage(req,res);
+} )
+router.get('/admin', (req,res) =>{
+    res.redirect('/admin/addmovie');
+} )
+
+router.post('/admin/addmovie', (req,res) =>{
+    addMovie(req,res);
+} )
+
+router.get('/admin/addshowTime', (req,res) =>{
+    handleShowtimesPage(req,res);
+    
+} )
+
+router.post('/admin/addshowTime', (req,res) =>{
+   addShowTime(req,res);
+} )
+
 
 
 module.exports = router;
